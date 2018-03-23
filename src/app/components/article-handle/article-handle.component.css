@@ -1,0 +1,60 @@
+.box {
+    padding-left: 20px;
+}
+
+.container {
+    padding-top: 20px;
+}
+
+.selectbox {
+    width: 100%;
+}
+
+.spacing {
+    padding-top: 20px;
+}
+
+.article-block {
+    position: relative;
+}
+
+.article-block::after {
+    position: absolute;
+    content: "";
+    height: 1px;
+    width: 90%;
+    bottom: -15px;
+    left: 5%;
+    border: 1px dashed #ccc
+}
+
+  :host ::ng-deep .avatar-uploader-trigger{
+    width: 400px;
+    height: 150px;
+    display: block;
+  }
+
+  :host ::ng-deep .avatar-uploader,
+  :host ::ng-deep .avatar {
+    display: block;
+    max-width: 400px;
+    max-height: 300px;    
+  }
+
+  img.avatar {
+    padding: 4px;
+  }
+
+  :host ::ng-deep .avatar-uploader {
+    display: inline-block;
+    border: 2px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  :host ::ng-deep .avatar-uploader-trigger {
+    display: table-cell;
+    vertical-align: middle;
+    font-size: 28px;
+    color: #999;
+  }

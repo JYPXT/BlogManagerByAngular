@@ -1,0 +1,161 @@
+
+   <div class="box">
+      <form class="container" nz-form [formGroup]="validateForm">
+          <div nz-form-item nz-row>
+            <div nz-form-label nz-col [nzSm]="2" [nzXs]="24">
+              <label for="title" nz-form-item-required>主标题</label>
+            </div>
+            <div nz-form-control nz-col [nzSm]="18" [nzXs]="24" nzHasFeedback>
+              <nz-input [nzSize]="'large'" formControlName="title" [nzId]="'title'"></nz-input>
+            </div>
+          </div>
+      </form>
+      <div nz-row>
+        <div nz-form-label nz-col [nzSm]="2" [nzXs]="24">
+          <label>图片</label>
+        </div>
+        <div nz-col [nzSm]="18" [nzXs]="24">
+          <nz-upload class="avatar-uploader"
+            [nzAction]="actionUrl"
+            nzName="avatar"
+            [nzHeaders]="headers"
+            [nzShowUploadList]="false"
+            [nzBeforeUpload]="beforeUpload"
+            (nzChange)="handleChange($event)">
+            <i *ngIf="!pictureUrl" class="anticon anticon-plus avatar-uploader-trigger"></i>
+            <img *ngIf="pictureUrl" [src]="pictureUrl" class="avatar">
+          </nz-upload>
+        </div>
+      </div>
+      <div nz-row class="spacing">
+        <div nz-form-label nz-col [nzSm]="2" [nzXs]="24">
+          <label>选择分类</label>
+        </div>
+        <div nz-col [nzSm]="18" [nzXs]="24">
+        <nz-select 
+        class="selectbox"
+        [(ngModel)]="selectedCategory"
+        [nzPlaceHolder]="'选择分类'"
+        (nzOpenChange)="openChangeCategory()"
+        nzAllowClear>
+          <nz-option
+            *ngFor="let category of categorys"
+            [nzLabel]="category.classification"
+            [nzValue]="category.id">
+          </nz-option>
+        </nz-select>
+        </div>
+      </div>  
+      <div nz-row class="spacing">
+        <div nz-form-label nz-col [nzSm]="2" [nzXs]="24">
+          <label>选择标签</label>
+        </div>
+        <!-- trackBy: tag.id; -->
+        <div nz-col [nzSm]="18" [nzXs]="24">
+        <nz-select class="selectbox"
+          [nzSize]="'large'"
+          [nzMode]="'multiple'"
+          [nzPlaceHolder]="'请选择标签'"
+          [(ngModel)]="selectedTag"
+          [nzNotFoundContent]="'没有标签'"
+          (nzOpenChange)="openChangeTag()"
+          >
+          <nz-option
+            *ngFor="let tag of tags;"
+            [nzLabel]="tag.tag"
+            [nzValue]="tag.id">
+          </nz-option>
+        </nz-select>
+        </div>
+      </div>
+      <div nz-row class="spacing">
+          <div nz-form-label nz-col [nzSm]="2" [nzXs]="24">
+            <label>是否公开</label>
+          </div>
+          <div nz-col [nzSm]="18" [nzXs]="24">
+            <nz-radio-group [(ngModel)]="accessRight" [nzSize]="'large'">
+                <label nz-radio-button [nzValue]="0">
+                  <span>不公开</span>
+                </label>
+                <label nz-radio-button [nzValue]="1">
+                  <span>公开</span>
+                </label>
+              </nz-radio-group>
+          </div>
+      </div>
+      <!--  trackBy: item.id 报错，还没探究原因-->
+      <form class="container" nz-form [formGroup]="validateContentControl">
+        <div class="article-block" *ngFor="let item of contentControl; let idx = index;">
+          <div nz-form-item nz-row>
+              <div nz-form-label nz-col [nzSm]="2" [nzXs]="24">
+                <label for="title" nz-form-item-required>文章大标题</label>
+              </div>
+              <div nz-form-control nz-col [nzSm]="18" [nzXs]="24" nzHasFeedback>
+                <nz-input [nzSize]="'large'" [formControlName]="item.name" [nzId]="item.id"></nz-input>
+              </div>
+              <div nz-form-label nz-col [nzSm]="3" [nzXs]="24">
+                <button
+                type="button"
+                nz-button [nzType]="'primary'"
+                (click)="addContent(false)"
+                ><i class="anticon anticon-plus"></i>新建小标题</button>
+                <button
+                type="button"
+                *ngIf="item.id !== 0"
+                nz-button [nzType]="'danger'"
+                (click)="removeContent(true, item.id)"
+                ><i class="anticon anticon-delete"></i></button>
+              </div>
+          </div>
+          <ng-container *ngFor="let childItem of item.childer; let cidx = index;">
+          <div nz-form-item nz-row>
+              <div nz-form-label nz-col [nzSm]="2" [nzXs]="24">
+                <label for="title" nz-form-item-required>文章小标题</label>
+              </div>
+              <div nz-form-control nz-col [nzSm]="18" [nzXs]="24" nzHasFeedback>
+                <nz-input [nzSize]="'large'" [formControlName]="childItem.childTitleName"></nz-input>
+              </div>
+              <div nz-form-label nz-col [nzSm]="3" [nzXs]="24">
+                <button
+                type="button"
+                *ngIf="cidx !== 0"
+                nz-button [nzType]="'danger'"
+                (click)="removeContent(false, item.id, cidx)"
+                ><i class="anticon anticon-delete"></i></button>
+              </div>
+          </div>
+          <div nz-form-item nz-row>
+              <div nz-form-label nz-col [nzSm]="2" [nzXs]="24">
+                <label for="title" nz-form-item-required>文章内容</label>
+              </div>
+              <div nz-form-control nz-col [nzSm]="18" [nzXs]="24" nzHasFeedback>
+                <nz-input
+                [nzSize]="'large'"
+                [nzRows]="4"
+                [nzType]="'textarea'"
+                [formControlName]="childItem.childContentName"></nz-input>
+              </div>
+          </div>
+          </ng-container>
+        </div>
+  
+          <div nz-form-item nz-row>
+              <div nz-form-label nz-col [nzSm]="23" [nzXs]="24" nzSize="large">
+                  <button type="button" nz-button [nzType]="'primary'" (click)="addContent()">
+                      <i class="anticon anticon-plus"></i>添加文章大标题
+                  </button>
+              </div>
+          </div>
+        <div class="text-center">
+          <button 
+          type="button"
+          [disabled]="isloading"
+          nz-button [nzType]="'primary'"
+          nzSize="large"
+          (click)="save()">
+              <i class="anticon anticon-book"></i>保存
+          </button>
+        </div>
+      </form>
+   </div>
+

@@ -1,0 +1,76 @@
+<nz-layout>
+    <nz-sider 
+    nzCollapsible 
+    [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="triggerTemplate"
+    [nzCollapsedWidth]="65"
+    [nzBreakpoint]="'lg'"
+    >
+      <div class="logo">
+      </div>
+      <ul 
+      nz-menu 
+      [nzTheme]="'dark'" 
+      [nzMode]="'inline'" 
+      [nzInlineCollapsed]="isCollapsed">
+        <li 
+        nz-menu-item
+        routerLinkActive = "ant-menu-item-selected"
+        [routerLink]="['article']">
+        <!-- [queryParams]="{debug: true}" fragment="education" ant-menu-item-selected-->
+          <span>
+            <i class="anticon anticon-file-text"></i>
+            <span class="nav-text">文章</span>
+          </span>
+        </li>
+        <li 
+        nz-menu-item
+        routerLinkActive = "ant-menu-item-selected"
+        [routerLink]="['category']">
+          <span>
+            <i class="anticon anticon-appstore-o"></i>
+            <span class="nav-text">分类</span>
+          </span>
+        </li>
+        <li 
+        nz-menu-item
+        routerLinkActive = "ant-menu-item-selected"
+        [routerLink]="['tags']">
+          <span>
+            <i class="anticon anticon-tags"></i>
+            <span class="nav-text">标签</span>
+          </span>
+        </li>
+        <li nz-submenu>
+          <span title><i class="anticon anticon-user"></i><span class="nav-text">User</span></span>
+          <ul>
+            <li nz-menu-item>Tom</li>
+            <li nz-menu-item>Bill</li>
+            <li nz-menu-item>Alex</li>
+          </ul>
+        </li>
+        <li nz-submenu>
+          <span title><i class="anticon anticon-team"></i><span class="nav-text">Team</span></span>
+          <ul>
+            <li nz-menu-item>Team 1</li>
+            <li nz-menu-item>Team 2</li>
+          </ul>
+        </li>
+      </ul>
+    </nz-sider>
+    <nz-layout
+    class="layout"
+    appSetContainerHeight
+    >
+      <nz-header class="header">
+        <i class="anticon trigger" [class.anticon-menu-fold]="!isCollapsed" [class.anticon-menu-unfold]="isCollapsed" (click)="isCollapsed=!isCollapsed"></i>
+      </nz-header>
+      <nz-content class="content">
+            <router-outlet></router-outlet>
+      </nz-content>
+      <nz-footer class="text-center">BLOG By {{nick}}</nz-footer>
+    </nz-layout>
+  </nz-layout>
+  <ng-template #trigger>
+    <i class="anticon anticon-up"></i>
+  </ng-template>
