@@ -84,6 +84,11 @@ export class ArticleHandleComponent implements OnInit {
       this.parseContent(JSON.parse(content));
     });
   }
+
+  trackBydatas (index: number, data) {
+    return data.id;
+  }
+
   // 修改文章时解析文章，添加验证表单
   parseContent (content) {
     content.forEach(p => {

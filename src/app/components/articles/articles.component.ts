@@ -20,7 +20,7 @@ export class ArticlesComponent implements OnInit {
 
   constructor(
     private http: HttpRequestService,
-    private util: UtilService) { }
+    public util: UtilService) { }
 
   ngOnInit() {
     this.getList ({
@@ -28,6 +28,10 @@ export class ArticlesComponent implements OnInit {
       pageIndex: this.pageIndex,
       condition: this.condition,
     });
+  }
+
+  trackBydatas (index: number, data) {
+    return data.id;
   }
 
   search() {

@@ -50,6 +50,10 @@ export class CategorysComponent implements OnInit {
     });
   }
 
+  trackBydatas (index: number, data) {
+    return data.id;
+  }
+
   search() {
     let condition = {};
     if (this.searchValue !== '') {

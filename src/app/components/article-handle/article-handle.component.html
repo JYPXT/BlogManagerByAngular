@@ -83,9 +83,8 @@
               </nz-radio-group>
           </div>
       </div>
-      <!--  trackBy: item.id 报错，还没探究原因-->
       <form class="container" nz-form [formGroup]="validateContentControl">
-        <div class="article-block" *ngFor="let item of contentControl; let idx = index;">
+        <div class="article-block" *ngFor="let item of contentControl; let idx = index; trackBy:trackBydatas">
           <div nz-form-item nz-row>
               <div nz-form-label nz-col [nzSm]="2" [nzXs]="24">
                 <label for="title" nz-form-item-required>文章大标题</label>

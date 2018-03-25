@@ -7,10 +7,9 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  private isCollapsed = false;
-  private triggerTemplate = null;
-
-  private nick: string;
+  isCollapsed = false;
+  triggerTemplate = null;
+  nick: string;
 
   @ViewChild('trigger') customTrigger: TemplateRef<void>;
 

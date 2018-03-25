@@ -38,8 +38,7 @@
           <button 
           nz-button
           [nzType]="'primary'"
-          [nzSize]="size"
-          (click)="util.toPage(['home/articleHandle'])"
+          (click)="util.toPage(['home/articleHandle'],{})"
           >
           <i class="anticon anticon-plus"></i>新建文章
           </button>
@@ -47,7 +46,7 @@
     </tr>
   </thead>
   <tbody nz-tbody>
-    <tr nz-tbody-tr *ngFor="let data of nzTable.data; let idx = index; trackBy: data.id;">
+    <tr nz-tbody-tr *ngFor="let data of nzTable.data; let idx = index; trackBy: trackBydatas;">
       <td nz-td>{{data.title}}</td>
       <td nz-td>
         <img class="picture" [src]="data.picture" alt="">
