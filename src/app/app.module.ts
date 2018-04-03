@@ -13,6 +13,8 @@ import { ArticlesComponent } from './components/articles/articles.component';
 import { ArticleHandleComponent } from './components/article-handle/article-handle.component';
 import { CategorysComponent } from './components/categorys/categorys.component';
 import { TagsComponent } from './components/tags/tags.component';
+import { EditUserInfoComponent } from './components/edit-user-info/edit-user-info.component';
+import { EditUserPasswordComponent } from './components/edit-user-password/edit-user-password.component';
 // 组件
 // 路由
 import { AppRoutingModule } from './router/app-routing.module';
@@ -25,6 +27,7 @@ import { HttpRequestService } from './services/http-request.service';
 import { UtilService } from './services/util.service';
 // 过滤器
 import { FilterTagPipe } from './pipes/filter-tag.pipe';
+import { UploadFileDirective } from './directives/upload-file.directive';
 
 
 @NgModule({
@@ -39,6 +42,9 @@ import { FilterTagPipe } from './pipes/filter-tag.pipe';
     ArticleHandleComponent,
     FilterTagPipe,
     ArticleHandleComponent,
+    EditUserInfoComponent,
+    EditUserPasswordComponent ,
+    UploadFileDirective,
     SetContainerHeightDirective,
   ],
   imports: [

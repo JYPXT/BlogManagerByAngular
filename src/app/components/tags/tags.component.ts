@@ -75,7 +75,7 @@ export class TagsComponent implements OnInit {
 
   getList (options) {
     this.loading = true;
-    this.http.post('tag/list', options).then((respon) => {
+    this.http.post('/tag/list', options).then((respon) => {
       this.loading = false;
       if (!respon) {return; }
       const { data: {count, rows} } = respon;
@@ -107,7 +107,7 @@ export class TagsComponent implements OnInit {
     if (!result) {return; }
     this.isConfirmLoading = true;
     if (this.isBuild) {
-      this.http.post('tag/saveTag', this.validateForm.value).then((respon) => {
+      this.http.post('/tag/saveTag', this.validateForm.value).then((respon) => {
         this.isVisible = false;
         this.isConfirmLoading = false;
         if (!respon) {return; }
@@ -115,7 +115,7 @@ export class TagsComponent implements OnInit {
         this.pageTotal += 1;
       });
     } else {
-      this.http.post('tag/editTag', this.validateForm.value).then((respon) => {
+      this.http.post('/tag/editTag', this.validateForm.value).then((respon) => {
         this.isVisible = false;
         this.isConfirmLoading = false;
         if (!respon) {return; }
@@ -134,7 +134,7 @@ export class TagsComponent implements OnInit {
       title  : '是否确认要删除这个标签',
       // content: '<b>一些解释</b>',
       onOk() {
-        that.http.post('tag/deleteTag', {id}).then((respon) => {
+        that.http.post('/tag/deleteTag', {id}).then((respon) => {
           if (!respon) {return; }
           that.data.splice(idx, 1);
           that.pageTotal -= 1;

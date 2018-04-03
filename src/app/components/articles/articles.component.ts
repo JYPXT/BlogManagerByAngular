@@ -34,6 +34,11 @@ export class ArticlesComponent implements OnInit {
     return data.id;
   }
 
+  getClassification ({ classification }) {
+    console.log(classification);
+    return classification;
+  }
+
   search() {
     let condition = {};
     if (this.searchValue !== '') {
@@ -56,7 +61,7 @@ export class ArticlesComponent implements OnInit {
 
   getList (options) {
     this.loading = true;
-    this.http.post('article/list', options).then((respon) => {
+    this.http.post('/article/list', options).then((respon) => {
       this.loading = false;
       if (!respon) {return; }
       const { data: {count, rows}, tags} = respon;

@@ -76,7 +76,7 @@ export class CategorysComponent implements OnInit {
 
   getList (options) {
     this.loading = true;
-    this.http.post('category/list', options).then((respon) => {
+    this.http.post('/category/list', options).then((respon) => {
       this.loading = false;
       if (!respon) {return; }
       const { data: {count, rows} } = respon;
@@ -108,7 +108,7 @@ export class CategorysComponent implements OnInit {
     if (!result) {return; }
     this.isConfirmLoading = true;
     if (this.isBuild) {
-      this.http.post('category/saveCategory', this.validateForm.value).then((respon) => {
+      this.http.post('/category/saveCategory', this.validateForm.value).then((respon) => {
         this.isVisible = false;
         this.isConfirmLoading = false;
         if (!respon) {return; }
@@ -117,7 +117,7 @@ export class CategorysComponent implements OnInit {
         this.pageTotal += 1;
       });
     } else {
-      this.http.post('category/editCategory', this.validateForm.value).then((respon) => {
+      this.http.post('/category/editCategory', this.validateForm.value).then((respon) => {
         this.isVisible = false;
         this.isConfirmLoading = false;
         if (!respon) {return; }
@@ -137,7 +137,7 @@ export class CategorysComponent implements OnInit {
       title  : '是否确认要删除这个分类',
       // content: '<b>一些解释</b>',
       onOk() {
-        that.http.post('category/deleteCategory', {id}).then((respon) => {
+        that.http.post('/category/deleteCategory', {id}).then((respon) => {
           if (!respon) {return; }
           // that.util.message.info('删除成功！');
           that.data.splice(idx, 1);

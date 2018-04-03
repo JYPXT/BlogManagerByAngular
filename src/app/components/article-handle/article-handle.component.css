@@ -28,7 +28,39 @@
     border: 1px dashed #ccc
 }
 
-  :host ::ng-deep .avatar-uploader-trigger{
+.upload-box {
+  position: relative;
+  width: 400px;
+  height: 200px;
+  border: 1px dashed #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 200px;
+  height: 200px;
+}
+
+.upload-box > .anticon-plus {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 40px;
+}
+
+.upload-box > img {
+  max-width: 100%;
+  max-height: 100%;
+  padding: 1px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+  /* :host ::ng-deep .avatar-uploader-trigger{
     width: 400px;
     height: 150px;
     display: block;
@@ -57,4 +89,4 @@
     vertical-align: middle;
     font-size: 28px;
     color: #999;
-  }
+  } */

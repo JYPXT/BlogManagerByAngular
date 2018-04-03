@@ -14,17 +14,16 @@
         <div nz-form-label nz-col [nzSm]="2" [nzXs]="24">
           <label>图片</label>
         </div>
-        <div nz-col [nzSm]="18" [nzXs]="24">
-          <nz-upload class="avatar-uploader"
-            [nzAction]="actionUrl"
-            nzName="avatar"
-            [nzHeaders]="headers"
-            [nzShowUploadList]="false"
-            [nzBeforeUpload]="beforeUpload"
-            (nzChange)="handleChange($event)">
-            <i *ngIf="!pictureUrl" class="anticon anticon-plus avatar-uploader-trigger"></i>
-            <img *ngIf="pictureUrl" [src]="pictureUrl" class="avatar">
-          </nz-upload>
+        <div
+        appUploadFile
+        (change)="uploadChange($event)"
+        nz-col
+        [nzSm]="18"
+        [nzXs]="24" >
+          <div class="upload-box">
+            <i class="anticon anticon-plus" *ngIf="!picture"></i>
+            <img [src]="picture" alt="" *ngIf="picture">
+          </div>
         </div>
       </div>
       <div nz-row class="spacing">
@@ -84,19 +83,19 @@
           </div>
       </div>
       <form class="container" nz-form [formGroup]="validateContentControl">
-        <div class="article-block" *ngFor="let item of contentControl; let idx = index; trackBy:trackBydatas">
+        <div class="article-block" *ngFor="let item of contents; let idx = index; trackBy:trackBydatas">
           <div nz-form-item nz-row>
               <div nz-form-label nz-col [nzSm]="2" [nzXs]="24">
-                <label for="title" nz-form-item-required>文章大标题</label>
+                <label for="title" nz-form-item-required>段落大标题</label>
               </div>
               <div nz-form-control nz-col [nzSm]="18" [nzXs]="24" nzHasFeedback>
-                <nz-input [nzSize]="'large'" [formControlName]="item.name" [nzId]="item.id"></nz-input>
+                <nz-input [nzSize]="'large'" [formControlName]="item.title" [nzId]="item.id"></nz-input>
               </div>
               <div nz-form-label nz-col [nzSm]="3" [nzXs]="24">
                 <button
                 type="button"
                 nz-button [nzType]="'primary'"
-                (click)="addContent(false)"
+                (click)="addContent(false, idx)"
                 ><i class="anticon anticon-plus"></i>新建小标题</button>
                 <button
                 type="button"
@@ -106,13 +105,13 @@
                 ><i class="anticon anticon-delete"></i></button>
               </div>
           </div>
-          <ng-container *ngFor="let childItem of item.childer; let cidx = index;">
+          <ng-container *ngFor="let childItem of item.childern; let cidx = index;">
           <div nz-form-item nz-row>
               <div nz-form-label nz-col [nzSm]="2" [nzXs]="24">
-                <label for="title" nz-form-item-required>文章小标题</label>
+                <label for="title" nz-form-item-required>段落小标题</label>
               </div>
               <div nz-form-control nz-col [nzSm]="18" [nzXs]="24" nzHasFeedback>
-                <nz-input [nzSize]="'large'" [formControlName]="childItem.childTitleName"></nz-input>
+                <nz-input [nzSize]="'large'" [formControlName]="childItem.title"></nz-input>
               </div>
               <div nz-form-label nz-col [nzSm]="3" [nzXs]="24">
                 <button
@@ -125,14 +124,15 @@
           </div>
           <div nz-form-item nz-row>
               <div nz-form-label nz-col [nzSm]="2" [nzXs]="24">
-                <label for="title" nz-form-item-required>文章内容</label>
+                <label for="title" nz-form-item-required>段落内容</label>
               </div>
               <div nz-form-control nz-col [nzSm]="18" [nzXs]="24" nzHasFeedback>
                 <nz-input
                 [nzSize]="'large'"
                 [nzRows]="4"
+                [nzAutosize]="{minRows:4}"
                 [nzType]="'textarea'"
-                [formControlName]="childItem.childContentName"></nz-input>
+                [formControlName]="childItem.content"></nz-input>
               </div>
           </div>
           </ng-container>
@@ -140,8 +140,8 @@
   
           <div nz-form-item nz-row>
               <div nz-form-label nz-col [nzSm]="23" [nzXs]="24" nzSize="large">
-                  <button type="button" nz-button [nzType]="'primary'" (click)="addContent()">
-                      <i class="anticon anticon-plus"></i>添加文章大标题
+                  <button type="button" nz-button [nzType]="'primary'" (click)="addContent(true)">
+                      <i class="anticon anticon-plus"></i>添加段落大标题
                   </button>
               </div>
           </div>

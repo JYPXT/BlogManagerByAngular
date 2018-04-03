@@ -56,7 +56,7 @@
           *ngFor="let tag of data.tags | filterTag:tags; trackBy: index;"
           [nzColor]="tag.color">{{tag.name}}</nz-tag>
       </td>
-      <td nz-td>{{data.category.classification}}</td>
+      <td nz-td>{{data.category === null ? "null" : data.category.classification}}</td>
       <td nz-td>{{data.created_at | date:"yyyy-MM-dd hh:mm"}}</td>
       <td nz-td>{{data.updated_at | date:"yyyy-MM-dd hh:mm"}}</td>
       <td nz-td>

@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
       }
     };
     this.validateForm = this.fb.group({
-      userName: [ '463214114@qq.com', [
+      userName: [ null, [
         Validators.required,
         Validators.email ] ],  // eg: [Validators.required,Validators.maxLength(10),Validators.minLength(3)]
       password: [ null, [ Validators.required ] ],
@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
     const result = this.util.checkValidateForm('info', this.validateForm, this.validateError);
     if (!result) {return; }
     const { userName, password, remember} = this.validateForm.value;
-    this.http.post('admin/login', {
+    this.http.post('/admin/login', {
       account: userName,
       password
     }, {
@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
       loadMessage: '正在登陆中'
     }).then((respon) => {
       if (!respon) {return; }
-      const {token, nick} = respon.data;
+      const {token, data: {nick}} = respon;
       window.sessionStorage.setItem('token', token);
       window.sessionStorage.setItem('nick', nick);
       this.router.navigateByUrl('home/article');

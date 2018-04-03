@@ -1,3 +1,4 @@
+import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
 import { Http, Jsonp, Headers } from '@angular/http';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -8,12 +9,16 @@ import 'rxjs/Rx';
 @Injectable()
 export class HttpRequestService {
 
-  public baseUrl = 'http://127.0.0.1:3000/';
+  public baseUrl = environment.config.apiUrl;
+
   constructor(private http: Http, private NzMessage: NzMessageService, private router: Router) { }
 
-  private getHeaders () {
+  private getHeaders (option = {}) {
     const token = window.sessionStorage.getItem('token');
     const headers = new Headers();
+    for (const i of Object.keys(option)) {
+      headers.set(i, option[i]);
+    }
     if (token) {
       headers.set('Authorization', token);
     }
@@ -28,7 +33,7 @@ export class HttpRequestService {
       });
     }
     const headers = this.getHeaders();
-    return this.http.post(this.baseUrl + url, data, {headers})
+    return this.http.post(`${this.baseUrl}${url}`, data, {headers})
     .map(res => res.json()) // rxjs的  字符串转json
     .toPromise() // 转成promise
     .then(respon => {
@@ -36,11 +41,10 @@ export class HttpRequestService {
         this.NzMessage.remove(); // loadingId
       }
       if (respon.status === 'error') {
-        this.NzMessage.error(respon.message);
         if (respon.code === '99') {
           this.router.navigateByUrl('login');
         }
-        return null;
+        return Promise.reject(respon.message);
       } else if (respon.message !== 'ok') {
         this.NzMessage.info(respon.message);
       }
@@ -53,7 +57,40 @@ export class HttpRequestService {
   }
 
   uploadFile (url: string, data = {}, isload = {falg: false, loadMessage: '正在加载中...'}) {
-
+    let loadingId = null;
+    if (isload.falg) {
+      loadingId = this.NzMessage.loading(isload.loadMessage, {
+        nzDuration: 0
+      });
+    }
+    const formData: FormData = new FormData();
+    for (const i of Object.keys(data)) {
+      formData.append(i, data[i]);
+    }
+    const headers = this.getHeaders({
+      'X-Requested-With': 'XMLHttpRequest'
+    });
+    return this.http.post(`${this.baseUrl}${url}`, formData, {headers})
+    .map(res => res.json()) // rxjs的  字符串转json
+    .toPromise()
+    .then(respon => {
+      if (isload.falg) {
+        this.NzMessage.remove(); // loadingId
+      }
+      if (respon.status === 'error') {
+        if (respon.code === '99') {
+          this.router.navigateByUrl('login');
+        }
+        return Promise.reject(respon.message);
+      } else if (respon.message !== 'ok') {
+        this.NzMessage.info(respon.message);
+      }
+      return respon;
+    })
+    .catch( error => {
+      if (isload.falg) {this.NzMessage.remove(); }
+      this.NzMessage.error(error);
+    });
   }
 
 }

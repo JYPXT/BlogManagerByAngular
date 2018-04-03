@@ -8,7 +8,8 @@ import { ArticlesComponent } from '../components/articles/articles.component';
 import { ArticleHandleComponent } from '../components/article-handle/article-handle.component';
 import { CategorysComponent } from '../components/categorys/categorys.component';
 import { TagsComponent } from '../components/tags/tags.component';
-
+import { EditUserInfoComponent } from '../components/edit-user-info/edit-user-info.component';
+import { EditUserPasswordComponent } from '../components/edit-user-password/edit-user-password.component';
 // 有需要再拆分子路由
 const routes: Routes = [
   {
@@ -25,6 +26,8 @@ const routes: Routes = [
     // canActivate: [AuthGuardService],
     component: HomeComponent,
     children: [
+      { path: 'editUserInfo', component: EditUserInfoComponent },
+      { path: 'editUserPassword', component: EditUserPasswordComponent },
       { path: 'article', component: ArticlesComponent},
       { path: 'articleHandle', component: ArticleHandleComponent},
       { path: 'category', component: CategorysComponent },

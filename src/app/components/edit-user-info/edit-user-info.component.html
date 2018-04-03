@@ -1,0 +1,64 @@
+<form nz-form [formGroup]="validateForm" class="form">
+    <div nz-form-item nz-row>
+      <div nz-form-label nz-col [nzSm]="3" [nzXs]="24">
+        <label for="nick" nz-form-item-required>昵称</label>
+      </div>
+      <div nz-form-control nz-col [nzSm]="18" [nzXs]="24" nzHasFeedback>
+        <nz-input [nzSize]="'large'" formControlName="nick"></nz-input>
+      </div>
+    </div>
+
+    <div nz-form-item nz-row>
+      <div nz-form-label nz-col [nzSm]="3" [nzXs]="24">
+        <label for="desc">描叙</label>
+      </div>
+      <div nz-form-control nz-col [nzSm]="18" [nzXs]="24" nzHasFeedback>
+        <nz-input [nzSize]="'large'" formControlName="desc"></nz-input>
+      </div>
+    </div>
+
+    <div nz-form-item nz-row>
+      <div nz-form-label nz-col [nzSm]="3" [nzXs]="24">
+        <label for="avatar">头像</label>
+      </div>
+      <div
+      appUploadFile
+      (change)="uploadChange($event, true)"
+      nz-form-control
+      nz-col
+      [nzSm]="18"
+      [nzXs]="24" >
+        <div class="upload-box avatar">
+          <i class="anticon anticon-plus" *ngIf="!avatar"></i>
+          <img [src]="avatar" alt="" *ngIf="avatar">
+        </div>
+      </div>
+    </div>
+
+    <div nz-form-item nz-row>
+      <div nz-form-label nz-col [nzSm]="3" [nzXs]="24">
+        <label for="background">背景图</label>
+      </div>
+      <div
+      appUploadFile
+      (change)="uploadChange($event, false)"
+      nz-form-control
+      nz-col
+      [nzSm]="18"
+      [nzXs]="24" >
+        <div class="upload-box">
+          <i class="anticon anticon-plus" *ngIf="!background"></i>
+          <img [src]="background" alt="" *ngIf="background">
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center">
+    <button 
+        nz-button
+        class="login-form-button"
+        [nzType]="'primary'"
+        [nzSize]="'large'"
+        (click)="save()">save</button>
+    </div>
+</form>
